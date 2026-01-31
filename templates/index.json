@@ -9,12 +9,20 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
+    "hero_section": {
+      "type": "hero_section",
       "settings": {}
+    },
+    "components_cards_section": {
+      "type": "components_cards_section"
+    },
+    "newsletter_section": {
+      "type": "newsletter_section"
     }
   },
   "order": [
-    "main"
+    "hero_section",
+    "components_cards_section",
+    "newsletter_section"
   ]
 }

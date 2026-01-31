@@ -1,57 +1,673 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+<style>
+  .footer {
+    width: 100%;
+    position: relative;
+    background: #ffffff;
+  }
+
+  .footer__top {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 4rem 0 3rem;
+  }
+
+  .footer__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    gap: 3rem;
+  }
+
+  .footer__column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .footer__column--brand {
+    max-width: 100%;
+  }
+
+  .footer__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer__logo-image-wrapper {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .footer__logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .footer__logo-text {
+    font-family: var(--dm-sans-font);
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: var(--color-gray-900);
+    letter-spacing: -0.02em;
+  }
+
+  .footer__description {
+    font-family: var(--dm-sans-font);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .footer__column-title {
+    font-family: var(--dm-sans-font);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin: 0;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .footer__menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer__menu-item {
+    margin: 0;
+  }
+
+  .footer__menu-link {
+    font-family: var(--dm-sans-font);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    letter-spacing: -0.01em;
+    display: inline-block;
+  }
+
+  .footer__menu-link:hover {
+    color: var(--color-gray-900);
+  }
+
+  .footer__badges {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .footer__badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 0.875rem 0.625rem;
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .footer__badge:hover {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .footer__badge-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer__badge-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--color-gray-900);
+  }
+
+  .footer__badge-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .footer__badge-title {
+    font-family: var(--dm-sans-font);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin: 0;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .footer__badge-subtitle {
+    font-family: var(--dm-sans-font);
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .footer__bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 1.5rem 0;
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .footer__copyright {
+    font-family: var(--dm-sans-font);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* Desktop Large */
+  @media screen and (max-width: 1440px) {
+    .footer__grid {
+      gap: 2.5rem;
+    }
+  }
+
+  /* Desktop */
+  @media screen and (max-width: 1200px) {
+    .footer__top {
+      padding: 3.5rem 0 2.5rem;
+    }
+
+    .footer__grid {
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+  }
+
+  /* Tablet */
+  @media screen and (max-width: 990px) {
+    .footer__top {
+      padding: 3rem 0 2rem;
+    }
+
+    .footer__container {
+      padding: 0 1.5rem;
+    }
+
+    .footer__grid {
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer__column:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .footer__badges {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  /* Tablet Small - 2 columns side by side */
+  @media screen and (max-width: 768px) {
+    .footer__top {
+      padding: 2.5rem 0 1.75rem;
+    }
+
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 1.5rem;
+    }
+
+    .footer__column--brand {
+      grid-column: 1 / -1;
+      max-width: 100%;
+    }
+
+    .footer__column:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .footer__logo-text {
+      font-size: 1.25rem;
+    }
+
+    .footer__column-title {
+      font-size: 0.875rem;
+    }
+
+    .footer__menu-link {
+      font-size: 0.875rem;
+    }
+
+    .footer__description {
+      font-size: 0.875rem;
+    }
+
+    .footer__badges {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+  }
+
+  /* Mobile - 2 columns for menus and badges */
+  @media screen and (max-width: 480px) {
+    .footer__top {
+      padding: 2rem 0 1.5rem;
+    }
+
+    .footer__container {
+      padding: 0 1rem;
+    }
+
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 1rem;
+    }
+
+    .footer__column--brand {
+      grid-column: 1 / -1;
+    }
+
+    .footer__column:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .footer__logo-image-wrapper {
+      width: 36px;
+      height: 36px;
+    }
+
+    .footer__logo-text {
+      font-size: 1.125rem;
+    }
+
+    .footer__description {
+      font-size: 0.8125rem;
+    }
+
+    .footer__column-title {
+      font-size: 0.8125rem;
+    }
+
+    .footer__menu {
+      gap: 0.625rem;
+    }
+
+    .footer__menu-link {
+      font-size: 0.8125rem;
+    }
+
+    .footer__badges {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .footer__badge {
+      padding: 0.75rem 0.5rem;
+    }
+
+    .footer__badge-icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .footer__badge-title {
+      font-size: 0.75rem;
+    }
+
+    .footer__badge-subtitle {
+      font-size: 0.625rem;
+    }
+
+    .footer__bottom {
+      padding: 1.25rem 0;
+    }
+
+    .footer__copyright {
+      font-size: 0.6875rem;
+    }
+  }
+
+  /* Small Mobile - Still 2×2 grid */
+  @media screen and (max-width: 375px) {
+    .footer__top {
+      padding: 1.75rem 0 1.25rem;
+    }
+
+    .footer__grid {
+      gap: 1.5rem 0.875rem;
+    }
+
+    .footer__logo-text {
+      font-size: 1rem;
+    }
+
+    .footer__description {
+      font-size: 0.75rem;
+    }
+
+    .footer__column-title {
+      font-size: 0.75rem;
+    }
+
+    .footer__menu-link {
+      font-size: 0.75rem;
+    }
+
+    .footer__badges {
+      gap: 0.625rem;
+    }
+
+    .footer__badge {
+      padding: 0.625rem 0.375rem;
+    }
+
+    .footer__badge-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .footer__badge-title {
+      font-size: 0.6875rem;
+    }
+
+    .footer__badge-subtitle {
+      font-size: 0.5625rem;
+    }
+
+    .footer__copyright {
+      font-size: 0.625rem;
+    }
+  }
+
+  /* Very Small Screens - Still 2×2 grid */
+  @media screen and (max-width: 320px) {
+    .footer__top {
+      padding: 1.5rem 0 1rem;
+    }
+
+    .footer__container {
+      padding: 0 0.875rem;
+    }
+
+    .footer__grid {
+      gap: 1.25rem 0.75rem;
+    }
+
+    .footer__logo-image-wrapper {
+      width: 32px;
+      height: 32px;
+    }
+
+    .footer__badges {
+      gap: 0.5rem;
+    }
+
+    .footer__badge {
+      padding: 0.5rem 0.25rem;
+    }
+
+    .footer__badge-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .footer__badge-title {
+      font-size: 0.625rem;
+    }
+
+    .footer__badge-subtitle {
+      font-size: 0.5rem;
+    }
+
+    .footer__bottom {
+      padding: 1rem 0;
+    }
+
+    .footer__copyright {
+      font-size: 0.5625rem;
+    }
+  }
+</style>
+
+<footer class="footer">
+  <!-- Footer Top -->
+  <div class="footer__top">
+    <div class="footer__container">
+      <div class="footer__grid">
+        <!-- Brand Column -->
+        <div class="footer__column footer__column--brand">
+          <a href="/" class="footer__logo">
+            {% if section.settings.show_logo %}
+              <div class="footer__logo-image-wrapper">
+                {% if section.settings.logo_image != blank %}
+                  <img
+                    src="{{ section.settings.logo_image | image_url: width: 80 }}"
+                    alt="{{ section.settings.brand_name }}"
+                    class="footer__logo-image"
+                    width="40"
+                    height="40">
+                {% else %}
+                  {{ 'logo' | placeholder_svg_tag: 'footer__logo-image' }}
+                {% endif %}
+              </div>
+            {% endif %}
+            <span class="footer__logo-text">{{ section.settings.brand_name }}</span>
+          </a>
+          {% if section.settings.brand_description != blank %}
+            <p class="footer__description">{{ section.settings.brand_description }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Menu Column Blocks -->
+        {% for block in section.blocks limit: 2 %}
+          <div class="footer__column" {{ block.shopify_attributes }}>
+            {% if block.settings.title != blank %}
+              <h3 class="footer__column-title">{{ block.settings.title }}</h3>
+            {% endif %}
+
+            {% if block.settings.menu != blank %}
+              <ul class="footer__menu">
+                {% for link in linklists[block.settings.menu].links %}
+                  <li class="footer__menu-item">
+                    <a href="{{ link.url }}" class="footer__menu-link">{{ link.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <!-- Trust Badges Column -->
+        <div class="footer__column">
+          <h3 class="footer__column-title">Why Choose Us</h3>
+          <div class="footer__badges">
+            <!-- Open Source Badge -->
+            <div class="footer__badge">
+              <div class="footer__badge-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                </svg>
+              </div>
+              <div class="footer__badge-content">
+                <div class="footer__badge-title">Open Source</div>
+                <div class="footer__badge-subtitle">Free & MIT License</div>
+              </div>
+            </div>
+
+            <!-- Production Ready Badge -->
+            <div class="footer__badge">
+              <div class="footer__badge-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor">
+                  <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
+                </svg>
+              </div>
+              <div class="footer__badge-content">
+                <div class="footer__badge-title">Production Ready</div>
+                <div class="footer__badge-subtitle">Battle Tested</div>
+              </div>
+            </div>
+
+            <!-- Regular Updates Badge -->
+            <div class="footer__badge">
+              <div class="footer__badge-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor">
+                  <path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z" />
+                </svg>
+              </div>
+              <div class="footer__badge-content">
+                <div class="footer__badge-title">Regular Updates</div>
+                <div class="footer__badge-subtitle">Always Improving</div>
+              </div>
+            </div>
+
+            <!-- Community Support Badge -->
+            <div class="footer__badge">
+              <div class="footer__badge-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor">
+                  <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+                </svg>
+              </div>
+              <div class="footer__badge-content">
+                <div class="footer__badge-title">Community</div>
+                <div class="footer__badge-subtitle">Active Support</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
-
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+  <!-- Footer Bottom -->
+  <div class="footer__bottom">
+    <div class="footer__container">
+      <p class="footer__copyright">{{ section.settings.copyright_text }}</p>
+    </div>
   </div>
 </footer>
 
-{% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-  }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-  footer .footer__links,
-  footer .footer__payment {
-    display: flex;
-    gap: 1rem;
-  }
-{% endstylesheet %}
-
 {% schema %}
-{
-  "name": "t:general.footer",
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
-      "default": true
-    }
-  ]
-}
+  {
+    "name": "Footer",
+    "tag": "footer",
+    "class": "section-footer",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand Section"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_logo",
+        "label": "Show Logo Image",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_image",
+        "label": "Logo Image",
+        "info": "If no image selected, Shopify placeholder will be shown"
+      },
+      {
+        "type": "text",
+        "id": "brand_name",
+        "label": "Brand Name",
+        "default": "Shopify Components"
+      }, {
+        "type": "textarea",
+        "id": "brand_description",
+        "label": "Brand Description",
+        "default": "Production-ready Liquid components for modern Shopify themes. Build faster with our component library."
+      }, {
+        "type": "header",
+        "content": "Copyright"
+      }, {
+        "type": "text",
+        "id": "copyright_text",
+        "label": "Copyright Text",
+        "default": "© 2019-2026 Shopify Components™ is a registered trademark. All Rights Reserved."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "footer_column",
+        "name": "Footer Menu",
+        "limit": 2,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Column Title",
+            "default": "Resources"
+          }, {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Menu",
+            "default": "footer",
+            "info": "Select a menu from Navigation"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Footer",
+        "blocks": [
+          {
+            "type": "footer_column",
+            "settings": {
+              "title": "Resources",
+              "menu": "footer"
+            }
+          }, {
+            "type": "footer_column",
+            "settings": {
+              "title": "Help & Support",
+              "menu": "footer"
+            }
+          }
+        ]
+      }
+    ]
+  }
 {% endschema %}

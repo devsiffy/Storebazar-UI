@@ -1,0 +1,318 @@
+{% comment %} snippets/loading-screen.liquid {% endcomment %}
+<style>
+  .loading-screen {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+    transition: opacity 0.3s ease
+    , visibility 0.3s ease;
+    pointer-events: all;
+  }
+
+  .loading-screen.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* === SAME ANIMATION, JUST SCALED DOWN === */
+  /* Scale factor: 0.5 (everything exactly halved) */.loading-screen__loader.loader {
+    width: 56px;
+    /* 112 * 0.5 */
+    height: 56px;
+    /* 112 * 0.5 */
+    position: relative;
+  }
+
+  .loading-screen__box1,
+  .loading-screen__box2,
+  .loading-screen__box3 {
+    border: 8px solid #000000;
+    /* 16 * 0.5 */
+    box-sizing: border-box;
+    position: absolute;
+    display: block;
+  }
+
+  .loading-screen__box1.box1 {
+    width: 56px;
+    /* 112 * 0.5 */
+    height: 24px;
+    /* 48 * 0.5 */
+    margin-top: 32px;
+    /* 64 * 0.5 */
+    margin-left: 0;
+    animation: abox1 3s 0.5s forwards ease-in-out infinite;
+  }
+
+  .loading-screen__box2.box2 {
+    width: 24px;
+    /* 48 * 0.5 */
+    height: 24px;
+    /* 48 * 0.5 */
+    margin-top: 0;
+    margin-left: 0;
+    animation: abox2 3s 0.5s forwards ease-in-out infinite;
+  }
+
+  .loading-screen__box3.box3 {
+    width: 24px;
+    /* 48 * 0.5 */
+    height: 24px;
+    /* 48 * 0.5 */
+    margin-top: 0;
+    margin-left: 32px;
+    /* 64 * 0.5 */
+    animation: abox3 3s 0.5s forwards ease-in-out infinite;
+  }
+
+  /* Keyframes: EXACT same logic, all dimensions halved */
+
+  @keyframes abox1 {
+    0% {
+      width: 56px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 0;
+    }
+
+    12.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 0;
+    }
+
+    25% {
+      width: 24px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 0;
+    }
+
+    37.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 0;
+    }
+
+    50% {
+      width: 24px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 0;
+    }
+
+    62.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 0;
+    }
+
+    75% {
+      width: 24px;
+      height: 56px;
+      margin-top: 0;
+      margin-left: 0;
+    }
+
+    87.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 0;
+    }
+
+    100% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 0;
+    }
+  }
+
+  @keyframes abox2 {
+    0% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 0;
+    }
+
+    12.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 0;
+    }
+
+    25% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 0;
+    }
+
+    37.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 0;
+    }
+
+    50% {
+      width: 56px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 0;
+    }
+
+    62.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 32px;
+    }
+
+    75% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 32px;
+    }
+
+    87.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 32px;
+    }
+
+    100% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 32px;
+    }
+  }
+
+  @keyframes abox3 {
+    0% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 32px;
+    }
+
+    12.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      margin-left: 32px;
+    }
+
+    25% {
+      width: 24px;
+      height: 56px;
+      margin-top: 0;
+      margin-left: 32px;
+    }
+
+    37.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 32px;
+    }
+
+    50% {
+      width: 24px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 32px;
+    }
+
+    62.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 32px;
+    }
+
+    75% {
+      width: 24px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 32px;
+    }
+
+    87.5% {
+      width: 24px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 32px;
+    }
+
+    100% {
+      width: 56px;
+      height: 24px;
+      margin-top: 32px;
+      margin-left: 0;
+    }
+  }
+</style>
+
+<div class="loading-screen" id="loading-screen">
+  <div class="loading-screen__loader loader">
+    <span class="loading-screen__box1 box1"></span>
+    <span class="loading-screen__box2 box2"></span>
+    <span class="loading-screen__box3 box3"></span>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var loadingScreen = document.getElementById('loading-screen');
+    if (!loadingScreen) return;
+  
+    var docEl = document.documentElement;
+    var body = document.body;
+    var originalHtmlOverflow = docEl.style.overflow;
+    var originalBodyOverflow = body.style.overflow;
+  
+    // Lock scroll / interaction while loader is visible
+    docEl.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+  
+    var startTime = performance.now();
+    var MIN_VISIBLE_TIME = 250; // keep same feel
+  
+    function hideLoader() {
+      var elapsed = performance.now() - startTime;
+      var delay = Math.max(0, MIN_VISIBLE_TIME - elapsed);
+  
+      setTimeout(function() {
+        loadingScreen.classList.add('loaded');
+  
+        setTimeout(function() {
+          if (loadingScreen && loadingScreen.parentNode) {
+            loadingScreen.parentNode.removeChild(loadingScreen);
+          }
+          docEl.style.overflow = originalHtmlOverflow || '';
+          body.style.overflow = originalBodyOverflow || '';
+        }, 320);
+      }, delay);
+    }
+  
+    window.addEventListener('load', hideLoader);
+    setTimeout(hideLoader, 4000);
+  })();
+</script>

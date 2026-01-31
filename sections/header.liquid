@@ -1,65 +1,753 @@
-<header>
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+<style>
+  .header {
+    width: 100%;
+    background-color: var(--color-bg);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
 
-  <div class="header__menu">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
-
-  <div class="header__icons">
-    {% if shop.customer_accounts_enabled %}
-      {{ 'icon-account.svg' | inline_asset_content | link_to: routes.account_url }}
-    {% endif %}
-
-    <a href="{{ routes.cart_url }}">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
-      {% endif %}
-
-      {{ 'icon-cart.svg' | inline_asset_content }}
-    </a>
-  </div>
-</header>
-
-{% stylesheet %}
-  header {
-    height: 5rem;
+  .header__container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 1rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  header a {
+    gap: 2rem;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid #e5e5e5;
     position: relative;
-    text-decoration: none;
-    color: var(--color-foreground);
+    z-index: 10000;
   }
-  header a sup {
-    position: absolute;
-    left: 100%;
-    overflow: hidden;
-    max-width: var(--page-margin);
-  }
-  header svg {
-    width: 2rem;
-  }
-  header .header__menu,
-  header .header__icons {
+
+  .header__left {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 2rem;
+    flex-shrink: 0;
   }
-{% endstylesheet %}
+
+  .header__logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .header__logo-link {
+    display: flex;
+    align-items: center;
+  }
+
+  .header__logo-image {
+    display: block;
+    object-fit: contain;
+  }
+
+  .header__logo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+  }
+
+  .header__logo-placeholder svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .header__logo-text {
+    font-family: var(--dm-sans-font);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .header__center {
+    display: flex;
+    align-items: center;
+  }
+
+  .header__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header__nav-item {
+    margin: 0;
+  }
+
+  .header__nav-link {
+    font-family: var(--dm-sans-font);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--color-black);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    display: block;
+  }
+
+  .header__nav-link:hover {
+    background-color: var(--color-gray-100);
+    color: var(--color-black);
+  }
+
+  .header__right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .header__search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .header__search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-bg);
+    border: 1px solid #e5e5e5;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .header__search-container:hover {
+    border-color: #d1d5db;
+  }
+
+  .header__search-icon {
+    position: absolute;
+    left: 12px;
+    width: 18px;
+    height: 18px;
+    stroke: var(--color-text-muted);
+    stroke-width: 2;
+    fill: none;
+    pointer-events: none;
+  }
+
+  .header__search-input {
+    font-family: var(--dm-sans-font);
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 2.5rem 0.5rem 2.5rem;
+    width: 200px;
+    outline: none;
+  }
+
+  .header__search-input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .header__search-input:focus {
+    outline: none;
+  }
+
+  .header__search-container:focus-within {
+    border-color: #d1d5db;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .header__search-close {
+    position: absolute;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .header__search-input:not(:placeholder-shown) ~ .header__search-close {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .header__search-close:hover {
+    background-color: var(--color-gray-100);
+  }
+
+  .header__search-close svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--color-text-muted);
+    stroke-width: 2;
+    fill: none;
+  }
+
+  .header__icon-button {
+    min-width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid #e5e5e5;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    padding: 0 0.625rem;
+    text-decoration: none;
+  }
+
+  .header__icon-button:hover {
+    background-color: var(--color-gray-100);
+    border-color: #d1d5db;
+  }
+
+  .header__icon-button svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--color-text);
+    stroke-width: 2;
+    fill: none;
+  }
+
+  .header__sign-in-button {
+    font-family: var(--dm-sans-font);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 0.625rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header__sign-in-button:hover {
+    background-color: #0a0a0a;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .header__mobile-toggle {
+    display: none;
+    min-width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid #e5e5e5;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    padding: 0 0.625rem;
+    transition: all 0.2s ease;
+  }
+
+  .header__mobile-toggle:hover {
+    background-color: var(--color-gray-100);
+    border-color: #d1d5db;
+  }
+
+  .header__mobile-toggle svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--color-text);
+    stroke-width: 2;
+    fill: none;
+    transition: all 0.3s ease;
+  }
+
+  .header__hamburger-icon {
+    display: block;
+  }
+
+  .header__close-icon {
+    display: none;
+  }
+
+  .header__mobile-toggle.active .header__hamburger-icon {
+    display: none;
+  }
+
+  .header__mobile-toggle.active .header__close-icon {
+    display: block;
+  }
+
+  .header__mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-bg);
+    padding: 100px 1.5rem 1.5rem;
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    z-index: 9999;
+  }
+
+  .header__mobile-menu.active {
+    display: flex;
+  }
+
+  .header__mobile-search {
+    position: relative;
+    width: 100%;
+  }
+
+  .header__mobile-search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    stroke: var(--color-text-muted);
+    stroke-width: 2;
+    fill: none;
+    pointer-events: none;
+  }
+
+  .header__mobile-search-input {
+    font-family: var(--dm-sans-font);
+    font-size: 1rem;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    border: 1px solid #e5e5e5;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    width: 100%;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+
+  .header__mobile-search-input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .header__mobile-search-input:focus {
+    border-color: #d1d5db;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .header__mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header__mobile-nav-item {
+    margin: 0;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .header__mobile-nav-item:last-child {
+    border-bottom: none;
+  }
+
+  .header__mobile-nav-link {
+    font-family: var(--dm-sans-font);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-black);
+    text-decoration: none;
+    padding: 1rem 0;
+    display: block;
+    transition: color 0.2s ease;
+  }
+
+  .header__mobile-nav-link:hover {
+    color: var(--color-text-muted);
+  }
+
+  /* Desktop Styles */
+  @media screen and (min-width: 991px) {
+    .header__mobile-toggle {
+      display: none !important;
+    }
+
+    .header__mobile-menu {
+      display: none !important;
+    }
+  }
+
+  /* Mobile Styles */
+  @media screen and (max-width: 990px) {
+    .header__container {
+      padding: 1rem 1.5rem;
+      gap: 1rem;
+    }
+
+    .header__center {
+      display: none;
+    }
+
+    .header__mobile-toggle {
+      display: flex;
+      order: -1;
+    }
+
+    .header__left {
+      order: 0;
+      gap: 0.75rem;
+    }
+
+    .header__right {
+      order: 1;
+      gap: 0.5rem;
+    }
+
+    .header__search-wrapper {
+      display: none;
+    }
+
+    .header__logo-placeholder {
+      width: 40px;
+      height: 40px;
+    }
+
+    .header__icon-button {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 0.5rem;
+    }
+
+    .header__sign-in-button {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .header__container {
+      padding: 0.875rem 1rem;
+    }
+
+    .header__logo-text {
+      font-size: 1rem;
+    }
+
+    .header__logo-placeholder {
+      width: 36px;
+      height: 36px;
+    }
+
+    .header__mobile-toggle {
+      min-width: 36px;
+      height: 36px;
+    }
+  }
+</style>
+
+<header class="header">
+  <div class="header__container">
+    <!-- Mobile Toggle (Hidden on Desktop) -->
+    <button class="header__mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+      <svg class="header__hamburger-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" x2="20" y1="12" y2="12"></line>
+        <line x1="4" x2="20" y1="6" y2="6"></line>
+        <line x1="4" x2="20" y1="18" y2="18"></line>
+      </svg>
+      <svg class="header__close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" x2="6" y1="6" y2="18"></line>
+        <line x1="6" x2="18" y1="6" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- Left: Logo + Nav -->
+    <div class="header__left">
+      <!-- Logo -->
+      <div class="header__logo-wrapper">
+        {% if section.settings.show_logo %}
+          <a href="{{ routes.root_url }}" class="header__logo-link">
+            {% if section.settings.logo_desktop != blank %}
+              <img 
+                class="header__logo-image" 
+                src="{{ section.settings.logo_desktop | image_url: width: 200 }}"
+                alt="{{ shop.name }}"
+                width="{{ section.settings.logo_width }}"
+                height="{{ section.settings.logo_height }}"
+                loading="eager"
+              />
+            {% else %}
+              <div class="header__logo-placeholder">
+                {{ 'image' | placeholder_svg_tag: 'header__logo-placeholder-svg' }}
+              </div>
+            {% endif %}
+          </a>
+        {% endif %}
+        
+        {% if section.settings.show_logo_text and section.settings.logo_text != blank %}
+          <a href="{{ routes.root_url }}" class="header__logo-text">{{ section.settings.logo_text }}</a>
+        {% endif %}
+      </div>
+
+      <!-- Navigation (Hidden on Mobile) -->
+      <nav class="header__center">
+        {% if section.settings.menu != blank %}
+          <ul class="header__nav">
+            {% for link in linklists[section.settings.menu].links %}
+              <li class="header__nav-item">
+                <a href="{{ link.url }}" class="header__nav-link">
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <ul class="header__nav">
+            <li class="header__nav-item">
+              <a href="#" class="header__nav-link">Home</a>
+            </li>
+            <li class="header__nav-item">
+              <a href="#" class="header__nav-link">Catalog</a>
+            </li>
+            <li class="header__nav-item">
+              <a href="#" class="header__nav-link">Contact</a>
+            </li>
+          </ul>
+        {% endif %}
+      </nav>
+    </div>
+
+    <!-- Right: Actions -->
+    <div class="header__right">
+      <!-- Search Bar (Hidden on Mobile) -->
+      <div class="header__search-wrapper">
+        <div class="header__search-container">
+          <svg class="header__search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          
+          <input 
+            type="text" 
+            class="header__search-input" 
+            id="searchInput"
+            placeholder="Quick search..." 
+            aria-label="Search"
+          />
+          
+          <button class="header__search-close" id="searchClose" aria-label="Clear search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" x2="6" y1="6" y2="18"></line>
+              <line x1="6" x2="18" y1="6" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- GitHub Button -->
+      {% if section.settings.github_url != blank %}
+        <a href="{{ section.settings.github_url }}" class="header__icon-button" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+            <path d="M9 18c-4.51 2-5-2-7-2"></path>
+          </svg>
+        </a>
+      {% else %}
+        <button class="header__icon-button" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+            <path d="M9 18c-4.51 2-5-2-7-2"></path>
+          </svg>
+        </button>
+      {% endif %}
+
+      <!-- Sign In Button -->
+      <a href="{{ routes.account_login_url }}" class="header__sign-in-button">
+        Sign In
+      </a>
+    </div>
+  </div>
+
+  <!-- Mobile Menu (Full Screen Overlay) -->
+  <div class="header__mobile-menu" id="mobileMenu">
+    <!-- Mobile Search -->
+    <div class="header__mobile-search">
+      <svg class="header__mobile-search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <input 
+        type="text" 
+        class="header__mobile-search-input" 
+        placeholder="Quick search..." 
+        aria-label="Search"
+      />
+    </div>
+
+    <!-- Mobile Navigation -->
+    <nav>
+      {% if section.settings.menu != blank %}
+        <ul class="header__mobile-nav">
+          {% for link in linklists[section.settings.menu].links %}
+            <li class="header__mobile-nav-item">
+              <a href="{{ link.url }}" class="header__mobile-nav-link">
+                {{ link.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <ul class="header__mobile-nav">
+          <li class="header__mobile-nav-item">
+            <a href="#" class="header__mobile-nav-link">Home</a>
+          </li>
+          <li class="header__mobile-nav-item">
+            <a href="#" class="header__mobile-nav-link">Catalog</a>
+          </li>
+          <li class="header__mobile-nav-item">
+            <a href="#" class="header__mobile-nav-link">Contact</a>
+          </li>
+        </ul>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Desktop Search Clear
+  const searchInput = document.getElementById('searchInput');
+  const searchClose = document.getElementById('searchClose');
+
+  if (searchInput && searchClose) {
+    searchClose.addEventListener('click', function() {
+      searchInput.value = '';
+      searchInput.focus();
+    });
+  }
+
+  // Mobile Menu Toggle
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  if (mobileToggle && mobileMenu) {
+    mobileToggle.addEventListener('click', function() {
+      mobileToggle.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      
+      // Prevent body scroll when menu is open
+      if (mobileMenu.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Close mobile menu when clicking on a link
+    const mobileLinks = mobileMenu.querySelectorAll('.header__mobile-nav-link');
+    mobileLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+</script>
 
 {% schema %}
 {
-  "name": "t:general.header",
+  "name": "Header",
+  "tag": "section",
+  "class": "section-header",
   "settings": [
+    {
+      "type": "header",
+      "content": "Logo Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_logo",
+      "label": "Show Logo Image",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_desktop",
+      "label": "Logo Image",
+      "info": "If no image is selected, a placeholder will be shown"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 30,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo Width",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 30,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo Height",
+      "default": 50
+    },
+    {
+      "type": "checkbox",
+      "id": "show_logo_text",
+      "label": "Show Logo Text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Text",
+      "default": "Storebazar UI"
+    },
+    {
+      "type": "header",
+      "content": "Navigation Settings"
+    },
     {
       "type": "link_list",
       "id": "menu",
-      "label": "t:labels.menu"
+      "label": "Menu",
+      "default": "main-menu",
+      "info": "Select a menu from Navigation"
+    },
+    {
+      "type": "header",
+      "content": "Action Buttons"
+    },
+    {
+      "type": "url",
+      "id": "github_url",
+      "label": "GitHub URL",
+      "info": "Enter your GitHub profile or repository URL"
     }
   ]
 }

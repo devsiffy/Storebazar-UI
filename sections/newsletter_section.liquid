@@ -1,0 +1,474 @@
+<style>
+  .newsletter {
+    width: 100%;
+    position: relative;
+    background: #f8f9fa;
+    padding: 5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .newsletter__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+  }
+
+  .newsletter__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .newsletter__heading {
+    font-family: var(--dm-sans-font);
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--color-gray-900);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .newsletter__description {
+    font-family: var(--dm-sans-font);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0 auto;
+    max-width: 600px;
+    letter-spacing: -0.01em;
+  }
+
+  .newsletter__form {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .newsletter__input-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .newsletter__input-icon {
+    position: absolute;
+    left: 1.25rem;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .newsletter__input-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: var(--color-text-muted);
+  }
+
+  .newsletter__input {
+    width: 100%;
+    font-family: var(--dm-sans-font);
+    font-size: 1rem;
+    padding: 0.875rem 1.25rem 0.875rem 3.25rem;
+    border: 1.5px solid rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--color-gray-900);
+    transition: all 0.3s ease;
+    letter-spacing: -0.01em;
+  }
+
+  .newsletter__input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .newsletter__input:focus {
+    outline: none;
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+
+  .newsletter__button {
+    font-family: var(--dm-sans-font);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #000000 0%, #2d3538 100%);
+    padding: 0.875rem 2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .newsletter__button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .newsletter__button:hover::before {
+    left: 100%;
+  }
+
+  .newsletter__button:hover {
+    background: linear-gradient(135deg, #1a1a1a 0%, #3d4548 100%);
+  }
+
+  .newsletter__button:active {
+    background: linear-gradient(135deg, #000000 0%, #2d3538 100%);
+  }
+
+  .newsletter__disclaimer {
+    font-family: var(--dm-sans-font);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .newsletter__disclaimer a {
+    color: var(--color-gray-900);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease;
+  }
+
+  .newsletter__disclaimer a:hover {
+    border-bottom-color: #000000;
+  }
+
+  /* Desktop Large */
+  @media screen and (max-width: 1440px) {
+    .newsletter__heading {
+      font-size: 2.25rem;
+    }
+
+    .newsletter__description {
+      font-size: 1.0625rem;
+    }
+  }
+
+  /* Desktop */
+  @media screen and (max-width: 1200px) {
+    .newsletter {
+      padding: 4.5rem 0;
+    }
+
+    .newsletter__heading {
+      font-size: 2rem;
+    }
+
+    .newsletter__description {
+      font-size: 1rem;
+    }
+  }
+
+  /* Tablet */
+  @media screen and (max-width: 990px) {
+    .newsletter {
+      padding: 4rem 0;
+    }
+
+    .newsletter__container {
+      padding: 0 1.5rem;
+    }
+
+    .newsletter__content {
+      gap: 1.75rem;
+    }
+
+    .newsletter__heading {
+      font-size: 1.875rem;
+    }
+
+    .newsletter__description {
+      font-size: 0.9375rem;
+    }
+  }
+
+  /* Tablet Small */
+  @media screen and (max-width: 768px) {
+    .newsletter {
+      padding: 3.5rem 0;
+    }
+
+    .newsletter__content {
+      gap: 1.5rem;
+    }
+
+    .newsletter__heading {
+      font-size: 1.75rem;
+    }
+
+    .newsletter__form {
+      gap: 0.625rem;
+    }
+
+    .newsletter__input {
+      font-size: 0.9375rem;
+      padding: 0.8125rem 1.125rem 0.8125rem 3rem;
+    }
+
+    .newsletter__button {
+      padding: 0.8125rem 1.75rem;
+      font-size: 0.9375rem;
+    }
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 480px) {
+    .newsletter {
+      padding: 3rem 0;
+    }
+
+    .newsletter__container {
+      padding: 0 1rem;
+    }
+
+    .newsletter__content {
+      gap: 1.5rem;
+    }
+
+    .newsletter__heading {
+      font-size: 1.5rem;
+    }
+
+    .newsletter__description {
+      font-size: 0.875rem;
+    }
+
+    .newsletter__form {
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.25rem;
+    }
+
+    .newsletter__input {
+      font-size: 0.875rem;
+      padding: 0.75rem 1rem 0.75rem 2.75rem;
+    }
+
+    .newsletter__input-icon {
+      left: 1rem;
+      width: 18px;
+      height: 18px;
+    }
+
+    .newsletter__button {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.875rem;
+    }
+
+    .newsletter__disclaimer {
+      font-size: 0.75rem;
+    }
+  }
+
+  /* Small Mobile */
+  @media screen and (max-width: 375px) {
+    .newsletter {
+      padding: 2.5rem 0;
+    }
+
+    .newsletter__heading {
+      font-size: 1.375rem;
+    }
+
+    .newsletter__description {
+      font-size: 0.8125rem;
+    }
+
+    .newsletter__input {
+      font-size: 0.8125rem;
+      padding: 0.6875rem 0.875rem 0.6875rem 2.5rem;
+    }
+
+    .newsletter__input-icon {
+      left: 0.875rem;
+      width: 16px;
+      height: 16px;
+    }
+
+    .newsletter__button {
+      padding: 0.6875rem 1.25rem;
+      font-size: 0.8125rem;
+    }
+
+    .newsletter__disclaimer {
+      font-size: 0.6875rem;
+    }
+  }
+
+  /* Very Small Screens */
+  @media screen and (max-width: 320px) {
+    .newsletter {
+      padding: 2rem 0;
+    }
+
+    .newsletter__container {
+      padding: 0 0.875rem;
+    }
+
+    .newsletter__heading {
+      font-size: 1.25rem;
+    }
+
+    .newsletter__description {
+      font-size: 0.75rem;
+    }
+
+    .newsletter__input {
+      font-size: 0.75rem;
+      padding: 0.625rem 0.75rem 0.625rem 2.25rem;
+    }
+
+    .newsletter__input-icon {
+      left: 0.75rem;
+      width: 14px;
+      height: 14px;
+    }
+
+    .newsletter__button {
+      padding: 0.625rem 1rem;
+      font-size: 0.75rem;
+    }
+
+    .newsletter__disclaimer {
+      font-size: 0.625rem;
+    }
+  }
+</style>
+
+<section class="newsletter">
+  <div class="newsletter__container">
+    <div class="newsletter__content">
+      <!-- Heading -->
+      <h2 class="newsletter__heading">{{ section.settings.heading }}</h2>
+
+      <!-- Description -->
+      {% if section.settings.description != blank %}
+        <p class="newsletter__description">{{ section.settings.description }}</p>
+      {% endif %}
+
+      <!-- Newsletter Form -->
+      <form class="newsletter__form" action="{{ section.settings.form_action }}" method="post">
+        <div class="newsletter__input-wrapper">
+          <div class="newsletter__input-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </div>
+          <input 
+            type="email" 
+            name="email" 
+            class="newsletter__input" 
+            placeholder="{{ section.settings.input_placeholder }}" 
+            required
+          >
+        </div>
+        <button type="submit" class="newsletter__button">{{ section.settings.button_text }}</button>
+      </form>
+
+      <!-- Disclaimer -->
+      {% if section.settings.show_disclaimer %}
+        <p class="newsletter__disclaimer">
+          By subscribing, you agree with our <a href="{{ section.settings.terms_url }}">Terms of Service</a> and <a href="{{ section.settings.privacy_url }}">Privacy Policy</a>.
+        </p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter Section",
+  "tag": "section",
+  "class": "section-newsletter",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Newsletter Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sign up for our newsletter"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Get notified about new components and features. Join our community of developers building with Shopify."
+    },
+    {
+      "type": "header",
+      "content": "Form Settings"
+    },
+    {
+      "type": "text",
+      "id": "input_placeholder",
+      "label": "Input Placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "form_action",
+      "label": "Form Action URL",
+      "default": "/contact#newsletter-form"
+    },
+    {
+      "type": "header",
+      "content": "Disclaimer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_disclaimer",
+      "label": "Show Disclaimer",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "terms_url",
+      "label": "Terms of Service URL",
+      "default": "/"
+    },
+    {
+      "type": "url",
+      "id": "privacy_url",
+      "label": "Privacy Policy URL",
+      "default": "/"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter Section"
+    }
+  ]
+}
+{% endschema %}
