@@ -13,9 +13,31 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "footer_column_MDbPTz": {
+          "type": "footer_column",
+          "settings": {
+            "title": "Pages",
+            "menu": "footer"
+          }
+        },
+        "footer_column_3ciNHG": {
+          "type": "footer_column",
+          "settings": {
+            "title": "Others",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": [
+        "footer_column_MDbPTz",
+        "footer_column_3ciNHG"
+      ],
       "settings": {
-        "menu": "",
-        "show_payment_icons": true
+        "show_logo": false,
+        "brand_name": "Shopify Components",
+        "brand_description": "Production-ready Liquid components for modern Shopify themes. Build faster with our component library.",
+        "copyright_text": "© 2019-2026 Shopify Components™ is a registered trademark. All Rights Reserved."
       }
     }
   },

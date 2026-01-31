@@ -11,13 +11,105 @@
   "sections": {
     "hero_section": {
       "type": "hero_section",
-      "settings": {}
+      "settings": {
+        "heading": "Launch Your Shopify Store 10x Faster",
+        "description": "Production-ready Liquid sections and blocks for modern Shopify themes. Save weeks of development time with our comprehensive component library.",
+        "button_text": "Browse All Components",
+        "button_url": "shopify://collections/all"
+      }
     },
     "components_cards_section": {
-      "type": "components_cards_section"
+      "type": "components_cards_section",
+      "blocks": {
+        "component_card_aCxPtH": {
+          "type": "component_card",
+          "settings": {
+            "title": "Hero Section",
+            "link": "/"
+          }
+        },
+        "component_card_HGUKd3": {
+          "type": "component_card",
+          "settings": {
+            "title": "Hero Section",
+            "link": "/"
+          }
+        },
+        "component_card_jHar63": {
+          "type": "component_card",
+          "settings": {
+            "title": "Hero Section",
+            "link": "/"
+          }
+        },
+        "component_card_WXkENf": {
+          "type": "component_card",
+          "settings": {
+            "title": "Hero Section",
+            "link": "/"
+          }
+        },
+        "component_card_3HU3rr": {
+          "type": "component_card",
+          "settings": {
+            "title": "Hero Section",
+            "link": "/"
+          }
+        },
+        "component_card_3M8yfr": {
+          "type": "component_card",
+          "settings": {
+            "title": "Hero Section",
+            "link": "/"
+          }
+        },
+        "component_card_iqcqPk": {
+          "type": "component_card",
+          "settings": {
+            "title": "Hero Section",
+            "link": "/"
+          }
+        },
+        "component_card_YC8aCm": {
+          "type": "component_card",
+          "settings": {
+            "title": "Hero Section",
+            "link": "/"
+          }
+        }
+      },
+      "block_order": [
+        "component_card_aCxPtH",
+        "component_card_HGUKd3",
+        "component_card_jHar63",
+        "component_card_WXkENf",
+        "component_card_3HU3rr",
+        "component_card_3M8yfr",
+        "component_card_iqcqPk",
+        "component_card_YC8aCm"
+      ],
+      "settings": {
+        "show_badge": true,
+        "badge_text": "Browse Components",
+        "title": "Explore Our Component Library",
+        "description": "Choose from 100+ production-ready components. Each component is fully customizable and optimized for Shopify stores.",
+        "show_button": true,
+        "button_text": "Browse All Components",
+        "button_url": "shopify://collections/all"
+      }
     },
     "newsletter_section": {
-      "type": "newsletter_section"
+      "type": "newsletter_section",
+      "settings": {
+        "heading": "Sign up for our newsletter",
+        "description": "Get notified about new components and features. Join our community of developers building with Shopify.",
+        "input_placeholder": "Enter your email",
+        "button_text": "Subscribe",
+        "form_action": "/contact#newsletter-form",
+        "show_disclaimer": true,
+        "terms_url": "/",
+        "privacy_url": "/"
+      }
     }
   },
   "order": [
