@@ -1,0 +1,217 @@
+<style>
+  .all_components__wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 20px 60px;
+    font-family: var(--dm-sans-font);
+  }
+
+  .all_components__section_title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 32px;
+  }
+
+  .all_components__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+  }
+
+  .all_components__card {
+    background: var(--color-bg);
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 32px 24px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.3s ease;
+    min-height: 140px;
+  }
+
+  .all_components__card:hover {
+    border-color: var(--color-brand);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .all_components__card_title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 8px;
+  }
+
+  .all_components__card_count {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .all_components__wrapper {
+      padding: 20px 16px 40px;
+    }
+
+    .all_components__grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .all_components__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="all_components__wrapper">
+  {% if section.settings.section_heading != blank %}
+    <h2 class="all_components__section_title">{{ section.settings.section_heading }}</h2>
+  {% endif %}
+
+  <div class="all_components__grid">
+    {% for block in section.blocks %}
+      {% if block.type == 'component_card' %}
+        <a
+          href="{{ block.settings.card_url }}"
+          class="all_components__card"
+          {{ block.shopify_attributes }}>
+          {% if block.settings.card_title != blank %}
+            <h3 class="all_components__card_title">{{ block.settings.card_title }}</h3>
+          {% endif %}
+
+          {% if block.settings.card_count != blank %}
+            <p class="all_components__card_count">{{ block.settings.card_count }}</p>
+          {% endif %}
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "All Components",
+    "tag": "section",
+    "class": "all_components",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Components Section"
+      },
+      {
+        "type": "text",
+        "id": "section_heading",
+        "label": "Section Heading",
+        "default": "Browse Components"
+      },
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "color",
+        "id": "card_border_color",
+        "label": "Card Border Color",
+        "default": "#e5e5e5"
+      }, {
+        "type": "color",
+        "id": "card_hover_border_color",
+        "label": "Card Hover Border Color",
+        "default": "#95bf47"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "component_card",
+        "name": "Component Card",
+        "settings": [
+          {
+            "type": "text",
+            "id": "card_title",
+            "label": "Card Title",
+            "default": "Hero Sections"
+          }, {
+            "type": "text",
+            "id": "card_count",
+            "label": "Component Count",
+            "default": "12 components"
+          }, {
+            "type": "url",
+            "id": "card_url",
+            "label": "Card URL"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "All Components",
+        "category": "Custom",
+        "blocks": [
+          {
+            "type": "component_card",
+            "settings": {
+              "card_title": "Hero Sections",
+              "card_count": "12 components"
+            }
+          },
+          {
+            "type": "component_card",
+            "settings": {
+              "card_title": "Product Cards",
+              "card_count": "18 components"
+            }
+          },
+          {
+            "type": "component_card",
+            "settings": {
+              "card_title": "Navigation",
+              "card_count": "15 components"
+            }
+          },
+          {
+            "type": "component_card",
+            "settings": {
+              "card_title": "CTAs & Buttons",
+              "card_count": "20 components"
+            }
+          }, {
+            "type": "component_card",
+            "settings": {
+              "card_title": "Testimonials",
+              "card_count": "10 components"
+            }
+          }, {
+            "type": "component_card",
+            "settings": {
+              "card_title": "Announcement Bars",
+              "card_count": "8 components"
+            }
+          }, {
+            "type": "component_card",
+            "settings": {
+              "card_title": "Product Grids",
+              "card_count": "14 components"
+            }
+          }, {
+            "type": "component_card",
+            "settings": {
+              "card_title": "Footers",
+              "card_count": "16 components"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

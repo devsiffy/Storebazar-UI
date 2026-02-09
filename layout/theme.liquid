@@ -20,12 +20,27 @@
   </head>
 
   <body>
+    {%- liquid
+      assign hide_header = false
+      assign hide_footer = false
+
+      # Add your page handles here
+      if page.handle == 'header-v01'
+        assign hide_header = true
+        assign hide_footer = true
+      endif
+    -%}
+
     {%- render 'loading-screen' -%}
 
-    {% sections 'header-group' %}
+    {% unless hide_header %}
+      {% sections 'header-group' %}
+    {% endunless %}
 
     {{ content_for_layout }}
 
-    {% sections 'footer-group' %}
+    {% unless hide_footer %}
+      {% sections 'footer-group' %}
+    {% endunless %}
   </body>
 </html>

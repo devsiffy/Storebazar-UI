@@ -9,12 +9,15 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "page",
-      "settings": {}
+    "all_components_header": {
+      "type": "all_components_header"
+    },
+    "all_components": {
+      "type": "all_components"
     }
   },
   "order": [
-    "main"
+    "all_components_header",
+    "all_components"
   ]
 }
