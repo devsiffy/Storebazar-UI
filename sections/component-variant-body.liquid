@@ -1,13 +1,12 @@
-{% assign all_components =  page.metafields.custom.all_components.value %}
-{% assign all_components_size =  page.metafields.custom.all_components.value | size %}
-
+{% assign all_components = page.metafields.custom.all_components.value %}
+{% assign all_components_size = all_components | size %}
 
 {% if all_components_size <= 1 %}
-  {{ all_components | json }}
+  <pre>{{ all_components | json }}</pre>
 {% endif %}
 
-{% comment %} 
 {% for component in all_components %}
-  {% assign component_variant = component.component_variants.value %}
-  {{ component_variant.title }}
-{% endfor %} {% endcomment %}
+  <div class="component">
+    <h3>{{ component.name }}</h3>
+  </div>
+{% endfor %}
