@@ -1,6 +1,6 @@
 {% assign all_components =  page.metafields.custom.all_components.value %}
 
-{{ all_components | josn }}
+{{ all_components }}
 {% comment %} 
 {% for component in all_components %}
   {% assign component_variant = component.component_variants.value %}
