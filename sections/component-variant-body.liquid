@@ -16,7 +16,6 @@
     font-weight: 700;
     color: var(--color-text);
     margin: 0 0 16px;
-    transition: color 0.3s ease;
   }
 
   .component-description {
@@ -38,13 +37,7 @@
     border-radius: 8px;
     overflow: hidden;
     background: var(--color-bg);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .variant-panel:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   }
 
   .variant-header {
@@ -54,11 +47,6 @@
     padding: 16px 24px;
     background: var(--color-gray-100);
     border-bottom: 1px solid #e5e5e5;
-    transition: background 0.3s ease;
-  }
-
-  .variant-panel:hover .variant-header {
-    background: #ebebeb;
   }
 
   .variant-title {
@@ -66,11 +54,6 @@
     font-weight: 600;
     color: var(--color-text);
     margin: 0;
-    transition: color 0.3s ease;
-  }
-
-  .variant-panel:hover .variant-title {
-    color: var(--color-brand-dark);
   }
 
   .variant-swatches {
@@ -88,49 +71,17 @@
     color: var(--color-text);
     cursor: pointer;
     border-radius: 4px;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .swatch-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(149, 191, 71, 0.1);
-    transform: translate(-50%, -50%);
-    transition: width 0.4s ease, height 0.4s ease;
-  }
-
-  .swatch-btn:hover::before {
-    width: 200px;
-    height: 200px;
+    transition: all 0.2s ease;
   }
 
   .swatch-btn:hover {
     background: var(--color-gray-050);
-    border-color: var(--color-brand);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .swatch-btn:active {
-    transform: translateY(0);
   }
 
   .swatch-btn.active {
     background: var(--color-black);
     color: var(--color-bg);
     border-color: var(--color-black);
-  }
-
-  .swatch-btn.active:hover {
-    background: var(--color-gray-900);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
   .variant-content {
@@ -145,18 +96,6 @@
   .preview-container.active,
   .code-container.active {
     display: block;
-    animation: fadeIn 0.3s ease-in-out;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
 
   .preview-wrapper {
@@ -169,22 +108,13 @@
     border: 1px solid #e5e5e5;
     border-radius: 4px;
     overflow: hidden;
-    background: #ffffff;
-    box-shadow: none;
-    transition: all 0.3s ease;
-  }
-
-  .preview-box:hover {
-    border-color: var(--color-brand);
-    box-shadow: 0 0 0 2px rgba(149, 191, 71, 0.1);
+    background: var(--color-bg);
   }
 
   .preview-iframe {
     width: 100%;
     height: 100%;
     border: none;
-    box-shadow: none;
-    display: block;
   }
 
   .open-preview-button {
@@ -200,42 +130,30 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
     backdrop-filter: blur(10px);
     z-index: 10;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 
   .open-preview-button:hover {
-    background: var(--color-black);
-    border-color: var(--color-brand);
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.85);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
   }
 
   .open-preview-button:active {
-    transform: translateY(-1px) scale(1.02);
+    transform: translateY(0);
   }
 
   .open-icon {
     width: 20px;
     height: 20px;
     flex-shrink: 0;
-    transition: transform 0.3s ease;
-  }
-
-  .open-preview-button:hover .open-icon {
-    transform: rotate(-5deg);
   }
 
   .code-wrapper {
     position: relative;
-    transition: all 0.3s ease;
-  }
-
-  .code-wrapper:hover {
-    transform: translateY(-2px);
   }
 
   .copy-button {
@@ -254,14 +172,11 @@
     transition: all 0.2s ease;
     backdrop-filter: blur(10px);
     z-index: 10;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .copy-button:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
   .copy-button:active {
@@ -271,7 +186,6 @@
   .copy-button.copied {
     background: var(--color-brand);
     border-color: var(--color-brand);
-    box-shadow: 0 0 0 4px rgba(149, 191, 71, 0.2);
   }
 
   .copy-icon,
@@ -330,12 +244,6 @@
     line-height: 1.6;
     max-height: 500px;
     overflow-y: auto;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease;
-  }
-
-  .code-pre:hover {
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(149, 191, 71, 0.3);
   }
 
   .code-pre code {
@@ -358,11 +266,10 @@
     background: #404040;
     border-radius: 4px;
     border: 2px solid #1a1a1a;
-    transition: background 0.3s ease;
   }
 
   .code-pre::-webkit-scrollbar-thumb:hover {
-    background: var(--color-brand-dark);
+    background: #505050;
   }
 
   .code-pre::-webkit-scrollbar-corner {
@@ -407,10 +314,6 @@
     .code-wrapper {
       display: flex;
       flex-direction: column-reverse;
-    }
-
-    .variant-panel:hover {
-      transform: none;
     }
   }
 </style>
