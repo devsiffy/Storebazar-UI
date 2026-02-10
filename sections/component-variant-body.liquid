@@ -415,8 +415,7 @@
   }
 </style>
 
-{% assign selected_component = page.metafields.custom.select_component %}
-{{ selected_component }}
+{% assign selected_component = page.metafields.custom.select_component.value %}
 
 <div class="component-variant-section">
   {% if selected_component %}
