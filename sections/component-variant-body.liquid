@@ -1,5 +1,6 @@
 {% assign all_components =  page.metafields.custom.all_components.value %}
 
 {% for component in all_components %}
-  {{ component.component_variants.value | json }}
+  {% assign component_variant = component.component_variants.value %}
+  {{ component_variant.title }}
 {% endfor %}
