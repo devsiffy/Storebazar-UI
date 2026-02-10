@@ -8,6 +8,7 @@
   {% assign component_variants = component.component_variants.value %}
 
   {% for variants in component_variants %}
-    {{ variants.title }}
+    <h5>{{ variants.title }}</h5>
+    <code>{{ variants.code_snippet }}</code>
   {% endfor %}
 {% endfor %}
