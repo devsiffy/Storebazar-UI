@@ -10,7 +10,7 @@
   {% for variants in component_variants %}
     <h5>{{ variants.title }}</h5>
     <pre>
-        <code>{{ variants.code_snippet }}</code>
+        <code>{{ variants.code_snippet | escape }}</code>
     </pre>
   {% endfor %}
 {% endfor %}
