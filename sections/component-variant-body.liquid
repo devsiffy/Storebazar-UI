@@ -7,5 +7,7 @@
 
   {% assign component_variants = component.component_variants.value %}
 
-  {{ component_variants.title }}
+  {% for variants in component_variants %}
+    {{ variants.title }}
+  {% endfor %}
 {% endfor %}
