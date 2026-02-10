@@ -1,5 +1,5 @@
 {% assign all_components =  page.metafields.custom.all_components.value %}
 
 {% for component in all_components %}
-  {{ component.custom.component.value }}
+  {{ component | json }}
 {% endfor %}
