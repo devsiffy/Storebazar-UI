@@ -11,7 +11,9 @@
   "sections": {
     "component-variant-body": {
       "type": "component-variant-body",
-      "settings": {}
+      "settings": {
+        "component_name": "Headers"
+      }
     }
   },
   "order": [
