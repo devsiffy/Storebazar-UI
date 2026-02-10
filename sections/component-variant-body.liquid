@@ -3,7 +3,7 @@
 
 
 {% if all_components_size <= 1 %}
-  {{ all_components | json }}
+  {{ all_components[0] | json }}
 {% endif %}
 {% comment %} 
 {% for component in all_components %}
