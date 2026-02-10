@@ -435,19 +435,21 @@
       {% if matched_component.description %}
         {% assign description_text = matched_component.description %}
         
-        {% comment %} Try to parse JSON if it's a rich text field {% endcomment %}
-        {% if description_text contains '"type":"root"' %}
-          {% assign json_data = description_text | parse_json %}
-          {% if json_data.children %}
-            {% for child in json_data.children %}
-              {% if child.children %}
-                {% for text_node in child.children %}
-                  {% if text_node.value %}
-                    <p class="component-description">{{ text_node.value }}</p>
-                  {% endif %}
-                {% endfor %}
-              {% endif %}
-            {% endfor %}
+        {% comment %} Extract text from JSON using regex-like string manipulation {% endcomment %}
+        {% if description_text contains '"value":"' %}
+          {% assign parts = description_text | split: '"value":"' %}
+          {% if parts[1] %}
+            {% assign text_part = parts[1] | split: '"}' | first %}
+            <p class="component-description">{{ text_part }}</p>
+          {% endif %}
+        {% elsif description_text contains '"type":"root"' %}
+          {% comment %} Try alternative parsing if value pattern doesn't match {% endcomment %}
+          {% assign parts = description_text | split: '"text","value":"' %}
+          {% if parts[1] %}
+            {% assign text_part = parts[1] | split: '"}' | first %}
+            <p class="component-description">{{ text_part }}</p>
+          {% else %}
+            <p class="component-description">{{ description_text }}</p>
           {% endif %}
         {% else %}
           <p class="component-description">{{ description_text }}</p>
