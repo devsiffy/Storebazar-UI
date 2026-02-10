@@ -9,17 +9,12 @@
  */
 {
   "sections": {
-    "all_components_header": {
-      "type": "all_components_header",
-      "settings": {}
-    },
-    "all_components": {
-      "type": "all_components",
+    "component-variant-body": {
+      "type": "component-variant-body",
       "settings": {}
     }
   },
   "order": [
-    "all_components_header",
-    "all_components"
+    "component-variant-body"
   ]
 }
