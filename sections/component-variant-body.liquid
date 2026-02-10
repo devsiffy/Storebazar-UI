@@ -1,9 +1,4 @@
 {% assign all_components = page.metafields.custom.all_components.value %}
-{% assign all_components_size = all_components | size %}
-
-{% if all_components_size <= 1 %}
-  <pre>{{ all_components | json }}</pre>
-{% endif %}
 
 {% for component in all_components %}
   <div class="component">
