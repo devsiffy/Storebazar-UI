@@ -3,7 +3,7 @@
 
 
 {% if all_components_size <= 1 %}
-  {{ all_components.name }}
+  {{ all_components[0] }}
 {% endif %}
 {% comment %} 
 {% for component in all_components %}
