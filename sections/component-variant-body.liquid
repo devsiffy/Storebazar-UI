@@ -322,7 +322,8 @@
     <div class="component-header">
       <h1 class="component-title">{{ selected_component.name }}</h1>
       {% if selected_component.description %}
-        {% assign description_text = selected_component.description %}
+        {% assign description_text = selected_component.description.value %}
+        {{ description_text }}
         
         {% comment %} Extract text from JSON using string manipulation {% endcomment %}
         {% if description_text contains '"value":"' %}
