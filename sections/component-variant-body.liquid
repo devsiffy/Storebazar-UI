@@ -189,6 +189,7 @@
     {% if component_variants.size > 0 %}
       <div class="variants-container">
         {% for variant in component_variants %}
+            {{ variant | json }}
           <div class="variant-panel">
             <div class="variant-header">
               <h2 class="variant-title">{{ variant.title }}</h2>
@@ -212,7 +213,6 @@
               {%- comment -%} Preview Container {%- endcomment -%}
               <div class="preview-container active" data-content-id="variant-{{ forloop.index }}">
                 <div class="preview-box">
-                    {{ variant | json }}
                   {% if variant.preview_url %}
                     <iframe
                       class="preview-iframe"
