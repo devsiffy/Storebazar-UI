@@ -4,4 +4,8 @@
   <div class="component">
     <h3>{{ component.name }}</h3>
   </div>
+
+  {% assign component_variants = component.component_variants.value %}
+
+  {{ component_variants | json }}
 {% endfor %}
