@@ -322,27 +322,7 @@
     <div class="component-header">
       <h1 class="component-title">{{ selected_component.name }}</h1>
       {% if selected_component.description %}
-        {% assign description_text = selected_component.description %}
-        
-        {% comment %} Extract text from JSON using string manipulation {% endcomment %}
-        {% if description_text contains '"value":"' %}
-          {% assign parts = description_text | split: '"value":"' %}
-          {% if parts[1] %}
-            {% assign text_part = parts[1] | split: '"}' | first %}
-            <p class="component-description">{{ text_part }}</p>
-          {% endif %}
-        {% elsif description_text contains '"type":"root"' %}
-          {% comment %} Try alternative parsing if value pattern doesn't match {% endcomment %}
-          {% assign parts = description_text | split: '"text","value":"' %}
-          {% if parts[1] %}
-            {% assign text_part = parts[1] | split: '"}' | first %}
-            <p class="component-description">{{ text_part }}</p>
-          {% else %}
-            <p class="component-description">{{ description_text }}</p>
-          {% endif %}
-        {% else %}
-          <p class="component-description">{{ description_text }}</p>
-        {% endif %}
+        <p class="component-description">{{ selected_component.description }}</p>
       {% endif %}
     </div>
 
