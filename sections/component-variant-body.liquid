@@ -189,7 +189,7 @@
     {% if component_variants.size > 0 %}
       <div class="variants-container">
         {% for variant in component_variants %}
-            {{ variant | json }}
+            {{ variant.preview_link }}
           <div class="variant-panel">
             <div class="variant-header">
               <h2 class="variant-title">{{ variant.title }}</h2>
