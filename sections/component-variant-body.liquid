@@ -3,7 +3,7 @@
 
 
 {% if all_components_size <= 1 %}
-  {{ all_components[0] | json }}
+  {{ all_components | find_index }}
 {% endif %}
 {% comment %} 
 {% for component in all_components %}
