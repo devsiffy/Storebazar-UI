@@ -321,7 +321,7 @@
     {%- comment -%} Component Header {%- endcomment -%}
     <div class="component-header">
       <h1 class="component-title">{{ selected_component.name }}</h1>
-      {{ selected_component | json }}
+      {{ selected_component.description }}
       {% if selected_component.description %}
         {% assign description_text = selected_component.description %}
         
