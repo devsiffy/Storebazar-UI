@@ -1,6 +1,10 @@
 {% assign all_components =  page.metafields.custom.all_components.value %}
+{% assign all_components_size =  page.metafields.custom.all_components.value | size %}
 
-{{ all_components }}
+
+{% if all_components_size <= 1 %}
+  {{ all_components.name }}
+{% endif %}
 {% comment %} 
 {% for component in all_components %}
   {% assign component_variant = component.component_variants.value %}
