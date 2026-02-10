@@ -415,27 +415,17 @@
   }
 </style>
 
-{% assign target_component_name = section.settings.component_name %}
-{% assign all_components = page.metafields.custom.all_components.value %}
-{% assign matched_component = null %}
-
-{% comment %} Find the matching component {% endcomment %}
-{% for component in all_components %}
-  {% if component.name == target_component_name %}
-    {% assign matched_component = component %}
-    {% break %}
-  {% endif %}
-{% endfor %}
+{% assign selected_component = page.metafields.custom.select_component.value %}
 
 <div class="component-variant-section">
-  {% if matched_component %}
+  {% if selected_component %}
     {%- comment -%} Component Header {%- endcomment -%}
     <div class="component-header">
-      <h1 class="component-title">{{ matched_component.name }}</h1>
-      {% if matched_component.description %}
-        {% assign description_text = matched_component.description %}
+      <h1 class="component-title">{{ selected_component.name }}</h1>
+      {% if selected_component.description %}
+        {% assign description_text = selected_component.description %}
         
-        {% comment %} Extract text from JSON using regex-like string manipulation {% endcomment %}
+        {% comment %} Extract text from JSON using string manipulation {% endcomment %}
         {% if description_text contains '"value":"' %}
           {% assign parts = description_text | split: '"value":"' %}
           {% if parts[1] %}
@@ -458,7 +448,7 @@
     </div>
 
     {%- comment -%} Component Variants {%- endcomment -%}
-    {% assign component_variants = matched_component.component_variants.value %}
+    {% assign component_variants = selected_component.component_variants.value %}
 
     {% if component_variants.size > 0 %}
       <div class="variants-container">
@@ -542,7 +532,7 @@
 
   {% else %}
     <div class="no-component-message">
-      <p>Component "{{ target_component_name }}" not found. Please check the component name in the section settings.</p>
+      <p>No component selected. Please select a component in the page metafields.</p>
     </div>
   {% endif %}
 </div>
@@ -629,15 +619,7 @@
 {% schema %}
 {
   "name": "Component Variant Body",
-  "settings": [
-    {
-      "type": "text",
-      "id": "component_name",
-      "label": "Component Name",
-      "info": "Enter the exact name of the component you want to display (e.g., 'Button', 'Card', etc.). This must match the component name in your metaobjects.",
-      "default": "None"
-    }
-  ],
+  "settings": [],
   "presets": [
     {
       "name": "Component Variant Body"
