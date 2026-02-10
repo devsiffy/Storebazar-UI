@@ -79,9 +79,9 @@
   }
 
   .swatch-btn.active {
-    background: var(--color-brand);
+    background: var(--color-black);
     color: var(--color-bg);
-    border-color: var(--color-brand);
+    border-color: var(--color-black);
   }
 
   .variant-content {
@@ -124,8 +124,7 @@
     border-radius: 4px;
     overflow-x: auto;
     margin: 0;
-    font-family: 'Courier New'
-    , monospace;
+    font-family: 'Courier New', monospace;
     font-size: 14px;
     line-height: 1.5;
     max-height: 500px;
@@ -181,7 +180,7 @@
       {% if matched_component.description %}
         <p class="component-description">{{ matched_component.description }}</p>
       {% endif %}
-  </div>
+    </div>
 
     {%- comment -%} Component Variants {%- endcomment -%}
     {% assign component_variants = matched_component.component_variants.value %}
@@ -217,7 +216,9 @@
                       class="preview-iframe"
                       src="{{ variant.preview_link }}"
                       title="{{ variant.title }} Preview"
-                      loading="lazy"></iframe>
+                      loading="lazy"
+                      sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+                      referrerpolicy="no-referrer-when-downgrade"></iframe>
                   {% else %}
                     <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--color-text-muted);">
                       No preview available
@@ -229,7 +230,7 @@
               {%- comment -%} Code Container {%- endcomment -%}
               <div class="code-container" data-content-id="variant-{{ forloop.index }}">
                 <div class="code-wrapper">
-<pre class="code-pre"><code>{{ variant.code_snippet | escape }}</code></pre>
+                  <pre class="code-pre"><code>{{ variant.code_snippet | escape }}</code></pre>
                 </div>
               </div>
             </div>
@@ -283,21 +284,21 @@
 </script>
 
 {% schema %}
-  {
-    "name": "Component Variant Body",
-    "settings": [
-      {
-        "type": "text",
-        "id": "component_name",
-        "label": "Component Name",
-        "info": "Enter the exact name of the component you want to display (e.g., 'Button', 'Card', etc.). This must match the component name in your metaobjects.",
-        "default": "None"
-      }
-    ],
-    "presets": [
-      {
-        "name": "Component Variant Body"
-      }
-    ]
-  }
+{
+  "name": "Component Variant Body",
+  "settings": [
+    {
+      "type": "text",
+      "id": "component_name",
+      "label": "Component Name",
+      "info": "Enter the exact name of the component you want to display (e.g., 'Button', 'Card', etc.). This must match the component name in your metaobjects.",
+      "default": "None"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Component Variant Body"
+    }
+  ]
+}
 {% endschema %}
